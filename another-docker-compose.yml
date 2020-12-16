@@ -1,0 +1,29 @@
+
+version: '3'
+
+services:
+  db:
+    image: rotkyobel/nodedb_cloud:exam
+    container_name: my_database
+    environment:
+      MYSQL_DATABASE: rainbow
+      MYSQL_ROOT_PASSWORD: mysecret
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysecret
+      DATABASE_HOST: db
+  web:
+    image: rotkyobel/nodeapp_cloud:exam
+    container_name: my_app
+    environment:
+      DATABASE_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: rainbow
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysecret
+    ports:
+      - "9090:3257"
+    depends_on:
+      - db
+    restart: on-failure
+
+
